@@ -39,6 +39,10 @@ Route::middleware('auth:api')->group(function(){
     Route::delete('category/{category}', 'CategoryController@delete');
 
     Route::post('/logout','Auth\AuthController@logout');
+
+    Route::post('setting','SettingController@store');
+    Route::put('setting/{id}','SettingController@update');
+    
 });
 
 Route::get('by-media/category/{media}', 'CategoryController@index');
@@ -47,3 +51,9 @@ Route::get('category/{category}', 'CategoryController@show');
 
 Route::post('register','Auth\AuthController@register');
 Route::post('login','Auth\AuthController@login');
+
+Route::get('youtube-video','YoutubeVideoController@index');
+
+
+
+Route::get('setting','SettingController@index');

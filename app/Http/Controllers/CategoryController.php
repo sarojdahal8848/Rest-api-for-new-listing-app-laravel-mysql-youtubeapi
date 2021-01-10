@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index($id)
     {
-        return DB::select('select Distinct title,news_url from categories where media_id = ?', [$id]);
+        return DB::select('select Distinct id,media_id,title,news_url from categories where media_id = ?', [$id]);
         // $category = DB::table('categories')->where('media_id',1);
         // return $category;
     }
@@ -34,7 +34,7 @@ class CategoryController extends Controller
         // return response()->json($category, 201);
         // $user_id = Auth::id();
         $request->validate([
-            'title'=>'required|string|unique:categories',
+            'title'=>'required|string',
             'news_url'=>'required|string',
             'media_id'=>'required',
             // 'user_id'=>auth()->id()
@@ -51,7 +51,7 @@ class CategoryController extends Controller
         $user_id =Auth::id();
         if($request['title']!=$item['title']){
             $validatedData=$request->validate([
-                'title'=>'required|string|unique:categories',
+                'title'=>'required|string',
                 'news_url'=>'required|string',
                 'media_id'=>'required'
             ]);
@@ -64,7 +64,7 @@ class CategoryController extends Controller
         }
         
         Category::where('id',$id)->update(['title'=>$request['title'],'news_url'=>$request['news_url']]);
-        $category =Category::all();
+        $category =Category::find($id);
 
         return response(['message'=>'success','data'=>$category],201);
     }

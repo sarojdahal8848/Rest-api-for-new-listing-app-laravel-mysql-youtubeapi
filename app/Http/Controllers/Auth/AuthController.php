@@ -14,8 +14,7 @@ class AuthController extends Controller
     public function register(Request $request){
         $validatedData = $request->validate([
             'name'=>'required|string|max:100',
-            'username'=>'required|string|max:255',
-            'email'=>'email|required',
+            'email'=>'email|required|unique:users',
             'password'=>'required|confirmed|max:20|min:6'
         ]);
         $validatedData['password']=bcrypt($validatedData['password']);
@@ -27,7 +26,6 @@ class AuthController extends Controller
 
     public function login(Request $request){
         $loginData = $request->validate([
-            'username'=>'required|string',
             'email'=>'required|email',
             'password'=>'required'
         ]);
